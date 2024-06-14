@@ -1,9 +1,14 @@
-export function Home(BannedCards = {}, PendingCards = {}) {
+import { Link } from "react-router-dom";
+
+export function Home(BannedCards = {}, PendingCards = {}, isLoggedIn = false) {
     return (
         <>
             <h2>Banned Cards</h2>
-            <button className="btn">Request Card To Be Banned</button>
-            <div className="divider"></div>
+            {isLoggedIn && (
+                <Link to="/suggestCard">
+                    <button className="btn" >Request Card To Be Banned</button>
+                </Link>
+            )}
             <div className="cardContainer">
                 {BannedCards.length > 0 ? BannedCards.map((card, index) => {
                     return (
