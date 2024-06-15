@@ -5,23 +5,31 @@ import {AuthContext} from "./Components/AuthContext.jsx";
 import {Header} from "./Components/Header.jsx";
 import {Footer} from "./Components/Footer.jsx";
 import {SuggestCard} from "./Components/SuggestCard.jsx";
+import Callback from "./Components/Callback.jsx";
 
 function App() {
-    const [isAuth, setIsAuth] = React.useState(false);
+    const [user, setUser] = React.useState(null);
 
-    const login = () => {
-        setIsAuth(true);
-    };
-    console.log(isAuth)
+    function setUserInfo(userInfo) {
+        console.log('User Info:', userInfo);
+        setUser(userInfo);
+    }
+
+    function logout() {
+        setUser(null);
+    }
+
+console.log(user)
     return (
         <>
-            <Header isLoggedIn={isAuth}/>
+            <Header user={user} logout={logout} />
             <main>
-                <AuthContext.Provider value={{isAuth, login}}>
+                <AuthContext.Provider value={{user}}>
                     <Router>
                         <Routes>
-                            <Route exact path="/" element={<AuthContext.Consumer>{({isAuth}) => <Home isLoggedIn={isAuth}/>}</AuthContext.Consumer>}/>
-                            <Route path="/suggestCard" element={isAuth ? <SuggestCard/> : <Navigate to="/"/>}/>
+                            <Route exact path="/" element={<Home user={user} />} />
+                            <Route path="/suggestCard" element={user !== null ? <SuggestCard/> : <Navigate to="/"/>}/>
+                            <Route path="/callback" element={<Callback setUserInfo={setUserInfo} />} />
                         </Routes>
                     </Router>
                 </AuthContext.Provider>
