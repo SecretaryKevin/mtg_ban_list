@@ -1,9 +1,7 @@
 import { useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import dotenv from 'dotenv';
-import process from "../../.eslintrc.cjs";
-dotenv.config();
+
 const Callback = (props) => {
     const navigate = useNavigate();
 
@@ -22,12 +20,13 @@ const Callback = (props) => {
             const headers = {
                 'Content-Type': 'application/x-www-form-urlencoded',
             };
-
+            console.log('client id', import.meta.env.VITE_CLIENT_ID)
+            console.log('secret', import.meta.env.VITE_CLIENT_SECRET)
             axios.post('https://discord.com/api/oauth2/token', new URLSearchParams(data).toString(), {
                 headers: headers,
                 auth: {
-                    username: process.env.REACT_APP_CLIENT_ID,
-                    password: process.env.REACT_APP_CLIENT_SECRET,
+                    username: import.meta.env.VITE_CLIENT_ID,
+                    password: import.meta.env.VITE_CLIENT_SECRET,
                 },
             }).then(response => {
                 console.log('Token Exchange Response:', response.data);
