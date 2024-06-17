@@ -25,6 +25,8 @@ export function SuggestCard() {
             const response = await axios.get(`https://api.scryfall.com/cards/search?order=name&q=${cardName}`);
             setCards(response.data.data);
         } catch (error) {
+            // if error display no cards found
+            setSelectedCard("No cards found.")
             console.error('Error fetching cards:', error);
         }
     };
@@ -57,6 +59,7 @@ export function SuggestCard() {
                             Ban Reason:
                             <input placeholder="Enter Ban Reason" type="text" name="banReason" onChange={handleBanReasonChange} />
                         </label>
+                        <button type="submit">Submit</button>
                     </form>
                 </>
             )}

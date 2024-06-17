@@ -1,11 +1,12 @@
 import React from "react";
 import {BrowserRouter as Router, Navigate, Route, Routes} from "react-router-dom";
-import {Home} from "./Components/Home.jsx";
+import {Home} from "./Pages/Home.jsx";
 import {AuthContext} from "./Components/AuthContext.jsx";
 import {Header} from "./Components/Header.jsx";
 import {Footer} from "./Components/Footer.jsx";
-import {SuggestCard} from "./Components/SuggestCard.jsx";
+import {SuggestCard} from "./Pages/SuggestCard.jsx";
 import Callback from "./Components/Callback.jsx";
+import {Unauthorised} from "./Pages/Unauthorised.jsx";
 
 function App() {
     const [user, setUser] = React.useState(null);
@@ -30,6 +31,7 @@ console.log(user)
                             <Route exact path="/" element={<Home user={user} />} />
                             <Route path="/suggestCard" element={user !== null ? <SuggestCard/> : <Navigate to="/"/>}/>
                             <Route path="/callback" element={<Callback setUserInfo={setUserInfo} />} />
+                            <Route path="/unauthorized" element={<Unauthorised/>}/>
                         </Routes>
                     </Router>
                 </AuthContext.Provider>
