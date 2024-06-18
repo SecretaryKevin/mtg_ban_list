@@ -1,7 +1,18 @@
+//TODO: Setup Database for Banned cards, Users, pending Decision cards
+//TODO: create voting system
+//TODO: create admin page
+//TODO: add Auth users to .env file
+//TODO: add Admin users to .env file
+//TODO: write tests
+//TODO: add error handling
+//TODO: write css
+//TODO: split up components more
+
+
 import React from "react";
 import {BrowserRouter as Router, Navigate, Route, Routes} from "react-router-dom";
-import {Home} from "./Pages/Home.jsx";
 import {AuthContext} from "./Components/AuthContext.jsx";
+import {Home} from "./Pages/Home.jsx";
 import {Header} from "./Components/Header.jsx";
 import {Footer} from "./Components/Footer.jsx";
 import {SuggestCard} from "./Pages/SuggestCard.jsx";
@@ -15,6 +26,7 @@ function App() {
         console.log('User Info:', userInfo);
         setUser(userInfo);
     }
+
 
     function logout() {
         setUser(null);
