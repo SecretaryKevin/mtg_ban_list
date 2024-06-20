@@ -17,6 +17,7 @@ import {Header} from "./Components/Header.jsx";
 import {Footer} from "./Components/Footer.jsx";
 import {SuggestCard} from "./Pages/SuggestCard.jsx";
 import Callback from "./Components/Callback.jsx";
+import {AdminDashboard} from "./Pages/AdminDashboard.jsx";
 import {Unauthorised} from "./Pages/Unauthorised.jsx";
 
 function App() {
@@ -42,8 +43,10 @@ console.log(user)
                         <Routes>
                             <Route exact path="/" element={<Home user={user} />} />
                             <Route path="/suggestCard" element={user !== null ? <SuggestCard/> : <Navigate to="/"/>}/>
+                            <Route path="/admin" element={user !== null && user.isAdmin ? <AdminDashboard/> : <Navigate to="/"/>}/>
                             <Route path="/callback" element={<Callback setUserInfo={setUserInfo} />} />
                             <Route path="/unauthorized" element={<Unauthorised/>}/>
+
                         </Routes>
                     </Router>
                 </AuthContext.Provider>
