@@ -1,12 +1,12 @@
 header{
     align-items: center;
     padding: 1rem 2rem;
-
 }
 
 li{
     list-style-type: none;
 }
+
 header{
     display: flex;
     justify-content: space-between;
@@ -38,6 +38,18 @@ button {
     transition: 0.3s;
 }
 
+.cardContainer{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+    align-items: start;
+}
+
 button:hover {
     background-color: #800080;
+}
+
+.cardContainer img {
+    width: 100%;
+    height: auto;
 }
