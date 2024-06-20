@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+const AUTH_USERS = import.meta.env.VITE_AUTH_UUID.split(',');
+const ADMIN_USERS = import.meta.env.VITE_ADMIN_UUID.split(',');
 
 const Callback = (props) => {
     const navigate = useNavigate();
@@ -43,14 +45,23 @@ const Callback = (props) => {
                         'Authorization': `Bearer ${accessToken}`
                     }
                 }).then(response => {
-                    const userInfo = {
-                        uuid: response.data.id,
-                        name: response.data.username,
-                        profilePicture: `https://cdn.discordapp.com/avatars/${response.data.id}/${response.data.avatar}.png`,
-                        refreshToken: refreshToken,
-                        expiresIn: expiresIn
-                    };
-                    props.setUserInfo(userInfo);
+                    console.log('user uuid', response.data.id);
+                    console.log('auth users', AUTH_USERS);
+                    if (AUTH_USERS.includes(response.data.id) || ADMIN_USERS.includes(response.data.id)) {
+                        const userInfo = {
+                            uuid: response.data.id,
+                            name: response.data.username,
+                            profilePicture: `https://cdn.discordapp.com/avatars/${response.data.id}/${response.data.avatar}.png`,
+                            refreshToken: refreshToken,
+                            expiresIn: expiresIn,
+                            isAdmin: ADMIN_USERS.includes(response.data.id)
+                        };
+                        props.setUserInfo(userInfo);
+                    }
+                    else{
+                        // redirect to unauthorized page
+                        navigate('/unauthorized');
+                    }
                 }).catch(error => {
                     console.error('Error during user info retrieval:', error.response || error.message);
                 });
