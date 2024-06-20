@@ -1,3 +1,4 @@
+import {Link} from 'react-router-dom';
 export function Header({ user, logout }) {
     return (
         <>
@@ -6,24 +7,24 @@ export function Header({ user, logout }) {
                 <nav>
                     <ul>
                         <li>
-                            <a href="/">
+                            <Link to="/">
                                 <button>Home</button>
-                            </a>
+                            </Link>
                         </li>
+                        {user !== null && user.isAdmin && <li>
+                            <Link to="/admin">
+                                <button>Admin Dashboard</button>
+                            </Link>
+                        </li>}
                         {user === null ? <li>
                             <a href={"https://discord.com/oauth2/authorize?client_id=1251121188051357787&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A5173%2Fcallback&scope=identify"}>
                                 <button>Login</button>
                             </a>
                         </li> : <li><button onClick={logout}>Logout</button></li>}
-                        {user !== null && user.isAdmin && <li>
-                            <a href="/admin">
-                                <button>Admin Dashboard</button>
-                            </a>
-                        </li>}
-
                     </ul>
                 </nav>
             </header>
+            <div className="divider"></div>
         </>
     )
 }

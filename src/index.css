@@ -1,42 +1,43 @@
+header{
+    align-items: center;
+    padding: 1rem 2rem;
+
+}
+
+li{
+    list-style-type: none;
+}
+header{
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+}
+
+nav ul {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .divider {
     height: 1px;
-    background-color: #ccc;
-    margin: 2rem 0;
+    background-color: gray;
+    margin-bottom: 2rem;
 }
 
-/* CSS for h1 tags */
-h1 {
-    color: #333;
-    font-size: 2em;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-/* CSS for p tags */
-p {
-    color: #666;
-    font-size: 1.2em;
-    line-height: 1.5;
-    margin-bottom: 10px;
-}
-
-/* CSS for button elements */
 button {
-    background-color: #4CAF50; /* Green */
+    height: 100%;
+    min-width: 5rem;
+    background-color: #4B006E;
     border: none;
-    color: white;
-    padding: 15px 32px;
+    color: #FFFFFF;
+    padding: 1rem 1rem;
     text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
+    font-size: 1rem;
+    margin: 0.1rem;
+    transition: 0.3s;
 }
 
-/* CSS for main section */
-main {
-    width: 80%;
-    margin: 0 auto;
-    padding: 20px;
+button:hover {
+    background-color: #800080;
 }

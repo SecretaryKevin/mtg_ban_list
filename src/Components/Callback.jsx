@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 const AUTH_USERS = import.meta.env.VITE_AUTH_UUID.split(',');
 const ADMIN_USERS = import.meta.env.VITE_ADMIN_UUID.split(',');
-
+import loadingGif from '../statics/loading.gif';
 const Callback = (props) => {
     const navigate = useNavigate();
 
@@ -76,6 +76,7 @@ const Callback = (props) => {
     return (
         <div>
             <h2>Loading...</h2>
+            <img src={loadingGif} alt="loading"/>
         </div>
     );
 };
