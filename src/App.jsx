@@ -22,7 +22,7 @@ function App() {
         setBannedCards(queryDatabase(databaseQuerys.getAllBannedCards));
         setPendingCards(queryDatabase(databaseQuerys.getPendingCards));
         setAllUsers(queryDatabase(databaseQuerys.getUsers));
-    })
+    }, [])
     function setUserInfo(userInfo) {
         console.log('User Info:', userInfo);
         setUser(userInfo);
