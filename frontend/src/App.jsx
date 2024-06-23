@@ -1,7 +1,5 @@
 import React, {useEffect} from "react";
 import {BrowserRouter as Router, Navigate, Route, Routes} from "react-router-dom";
-import {databaseQuerys} from "./utilities/databaseQuerys.js";
-import {queryDatabase} from "./utilities/databaseOperations.js";
 import {AuthContext} from "./Components/AuthContext.jsx";
 import {Home} from "./Pages/Home.jsx";
 import {Header} from "./Components/Header.jsx";
@@ -18,11 +16,7 @@ function App() {
     const [PendingCards, setPendingCards] = React.useState([]);
     const [allUsers, setAllUsers] = React.useState([]);
 
-    useEffect(() => {
-        setBannedCards(queryDatabase(databaseQuerys.getAllBannedCards));
-        setPendingCards(queryDatabase(databaseQuerys.getPendingCards));
-        setAllUsers(queryDatabase(databaseQuerys.getUsers));
-    }, [])
+
     function setUserInfo(userInfo) {
         console.log('User Info:', userInfo);
         setUser(userInfo);

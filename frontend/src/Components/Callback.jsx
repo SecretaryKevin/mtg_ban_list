@@ -39,6 +39,7 @@ const Callback = (props) => {
                 console.log("Refresh Token: ", refreshToken);
                 console.log("Expires In: ", expiresIn);
 
+
                 // Use the access token to get the user's UUID, name, and profile picture
                 axios.get('https://discord.com/api/users/@me', {
                     headers: {
@@ -46,7 +47,9 @@ const Callback = (props) => {
                     }
                 }).then(response => {
                     console.log('user uuid', response.data.id);
-                    console.log('auth users', AUTH_USERS);
+                    console.log('user name', response.data.username);
+                    console.log('user profile picture', `https://cdn.discordapp.com/avatars/${response.data.id}/${response.data.avatar}.png`);
+
                     if (AUTH_USERS.includes(response.data.id) || ADMIN_USERS.includes(response.data.id)) {
                         const userInfo = {
                             uuid: response.data.id,
