@@ -23,6 +23,7 @@ connection.connect((err) => {
 
 router.get('/GetUsers', (req, res) => {
     // get all users from the database
+    console.log('Getting users' )
     connection.query('SELECT * FROM Users', (err, rows) => {
         if (err) {
             console.log("Error: " + err)
@@ -31,32 +32,9 @@ router.get('/GetUsers', (req, res) => {
     })
 })
 
-
-router.post('/AddUser', (req, res) => {
-    // adds a user to the database
-    //get user_uuid and user_name from request
-    let user_uuid = req.body.user_uuid;
-    let user_name = req.body.user_name;
-    //check if user_uuid is already in the database
-    connection.query('SELECT * FROM Users WHERE user_uuid = ?', [user_uuid], (err, rows) => {
-        if (err) {
-            console.log("Error: " + err)
-        }
-        if (rows.length > 0) {
-            res.send("User already exists");
-        } else {
-            connection.query('INSERT INTO Users (user_uuid, user_name) VALUES (?, ?)', [user_uuid, user_name], (err, rows) => {
-                if (err) {
-                    console.log("Error: " + err)
-                }
-                res.send("User added");
-            })
-        }
-    })
-})
-
 router.get('/getCards', (req, res) => {
     //get all cards from the database
+    console.log('Getting cards')
     connection.query('SELECT * FROM Cards', (err, rows) => {
         if (err) {
             console.log("Error: " + err)
@@ -65,37 +43,87 @@ router.get('/getCards', (req, res) => {
     })
 })
 
-router.post('/addCard', (req, res) => {
-    // adds a card to the database
-    // get card_name, reason_for_ban recommended by (user id) status from request
-    let card_name = req.body.card_name;
-    let reason_for_ban = req.body.reason_for_ban;
-    let recommended_by = req.body.recommended_by;
-    let status = req.body.status;
-    // check if card_name is already in the database
-    connection.query('SELECT * FROM Cards WHERE card_name = ?', [card_name], (err, rows) => {
+router.get('/getVotes', (req, res) => {
+    //get all votes from the database
+    console.log('Getting votes')
+    connection.query('SELECT * FROM Votes', (err, rows) => {
         if (err) {
             console.log("Error: " + err)
         }
-        if (rows.length > 0) {
-            res.send("Card already exists");
-        } else {
-            connection.query('INSERT INTO Cards (card_name, reason_for_ban, recommended_by, status) VALUES (?, ?, ?, ?)', [card_name, reason_for_ban, recommended_by, status], (err, rows) => {
-                if (err) {
-                    console.log("Error: " + err)
-                }
-                res.send("Card added");
-            })
+        res.send(rows);
+    })
+})
+
+router.post('/addUser', (req, res) => {
+    console.log("Adding User uuid: " + req.body.uuid + " and username: " + req.body.name)
+    let uuid = req.body.uuid;
+    let username = req.body.name;
+    connection.query(`INSERT INTO Users (user_uuid, user_name) VALUES ('${uuid}', '${username}')`, (err) => {
+        if (err) {
+            console.log("Error: " + err)
         }
     })
 })
 
-router.get('/getCardVotes', (req, res) => {
+router.post('/addCard', (req, res) => {
+    let card_name = req.body.card_name;
+    let card_image_url = req.body.card_image_url;
+    let reason_for_ban = req.body.reason_for_ban;
+    let recommended_by = req.body.recommended_by;
+    let status = req.body.status;
+    console.log("Adding Card: " + card_name + " with reason: " + reason_for_ban + " recommended by: " + recommended_by + " status: " + status)
+    let sql = `INSERT INTO Cards (card_name, reason_for_ban, recommended_by, status, card_image_url) VALUES (?, ?, ?, ?, ?)`;
+    let values = [card_name, reason_for_ban, recommended_by, status, card_image_url];
+    connection.query(sql, values, (err) => {
+        if (err) {
+            console.log("Error: " + err)
+        }
+    })
+})
 
+router.post('/addVote', (req, res) => {
+    console.log("Adding Vote: " + req.body.vote)
+    let vote_id = req.body.vote_id;
+    let card_id = req.body.card_id;
+    let user_uuid = req.body.user_id;
+    let vote = req.body.vote;
+    connection.query(`INSERT INTO Votes (vote_id, card_id, user_uuid, vote) VALUES ('${vote_id}', '${card_id}', '${user_uuid}', '${vote}')`, (err) => {
+        if (err) {
+            console.log("Error: " + err)
+        }
+    })
+})
+
+router.post('/updateCard', (req, res) => {
+    console.log("Updating Card: " + req.body.card)
+    let card_id = req.body.card_id;
+    let status = req.body.status;
+    connection.query(`UPDATE Cards SET status = '${status}' WHERE card_id = '${card_id}'`, (err) => {
+        if (err) {
+            console.log("Error: " + err)
+        }
+    })
 })
 
 router.post('/updateVote', (req, res) => {
+    console.log("Updating Vote: " + req.body.vote)
+    let vote_id = req.body.vote_id;
+    let vote = req.body.vote;
+    connection.query(`UPDATE Votes SET vote = '${vote}' WHERE vote_id = '${vote_id}'`, (err) => {
+        if (err) {
+            console.log("Error: " + err)
+        }
+    })
+})
 
+router.post('/deleteCard', (req, res) => {
+    console.log("Deleting Card: " + req.body.card)
+    let card_id = req.body.card_id;
+    connection.query(`DELETE FROM Cards WHERE card_id = '${card_id}'`, (err) => {
+        if (err) {
+            console.log("Error: " + err)
+        }
+    })
 })
 
 

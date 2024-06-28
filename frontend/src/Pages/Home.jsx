@@ -1,6 +1,17 @@
+import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 
-export function Home({ BannedCards = [], PendingCards = [], user }) {
+
+
+
+export function Home({ cards, user }) {
+    const [bannedCardData, setBannedCardData] = useState([]);
+    const [pendingCardData, setPendingCardData] = useState([]);
+
+    const BannedCards = cards.filter(card => card.status === 'banned');
+    const PendingCards = cards.filter(card => card.status === 'pending vote');
+
+
     return (
         <>
             <h2>Banned Cards</h2>
@@ -10,26 +21,24 @@ export function Home({ BannedCards = [], PendingCards = [], user }) {
                 </Link>
             )}
             <div className="cardContainer">
-                {BannedCards.length > 0 ? BannedCards.map((card, index) => {
-                    return (
-                        <div key={index} className="card">
-                            <h2>{card.name}</h2>
-                            <p>{card.reason}</p>
-                        </div>
-                    )
-                }) : <h3>No cards are currently banned</h3>}
+                {bannedCardData.map((card, index) => (
+                    <div key={index} className="card">
+                        <h2>{card.name}</h2>
+                        <img src={card.image_uris?.normal} alt={card.name}/>
+                        <p>{BannedCards[index].reason}</p>
+                    </div>
+                ))}
             </div>
             <div className="divider"></div>
             <h2>Cards Pending Decision</h2>
             <div className="cardContainer">
-            {PendingCards.length > 0 ? PendingCards.map((card, index) => {
-                return (
+                {PendingCards.map((card, index) => (
                     <div key={index} className="card">
-                        <h2>{card.name}</h2>
-                        <p>{card.reason}</p>
+                        <h2>{card.card_name}</h2>
+                        <img src={card.card_image_url} alt={card.card_name}/>
+                        <button className="btn">Details</button>
                     </div>
-                )
-            }) : <h3>No cards are currently pending a decision</h3>}
+                ))}
             </div>
         </>
     )
