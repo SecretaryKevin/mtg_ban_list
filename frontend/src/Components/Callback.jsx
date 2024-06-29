@@ -1,6 +1,11 @@
+//TODO: update callback to no longer use env for auth users and admin users rather use the database
+//TODO: if user name doesnt match uuid update the name in the database
+//TODO: break down the callback component into smaller components or smaller functions at least
+
 import { useEffect } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import PropTypes from "prop-types";
 import loadingGif from '../statics/loading.gif';
 
 const AUTH_USERS = import.meta.env.VITE_AUTH_UUID.split(',');
@@ -46,7 +51,7 @@ const Callback = ({ setUserInfo, allUsers }) => {
         if (code) {
             fetchToken(code)
                 .then(({ data }) => {
-                    const { access_token: accessToken, refresh_token: refreshToken, expires_in: expiresIn } = data;
+                    const { access_token: accessToken } = data;
 
                     fetchUserInfo(accessToken)
                         .then(({ data }) => {
@@ -97,6 +102,15 @@ const Callback = ({ setUserInfo, allUsers }) => {
             <img src={loadingGif} alt="loading"/>
         </div>
     );
+};
+
+Callback.propTypes = {
+    setUserInfo: PropTypes.func.isRequired,
+    allUsers: PropTypes.arrayOf(PropTypes.shape({
+        uuid: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        isAdmin: PropTypes.bool.isRequired
+    })).isRequired
 };
 
 export default Callback;

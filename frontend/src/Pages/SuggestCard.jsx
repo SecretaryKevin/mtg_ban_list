@@ -1,7 +1,8 @@
+import propTypes from 'prop-types';
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-
 import { CardSearch } from '../Components/CardSearch';
+
 
 export function SuggestCard( { onBanCardSubmit }) {
     const navigate = useNavigate();
@@ -52,3 +53,7 @@ export function SuggestCard( { onBanCardSubmit }) {
         </>
     );
 }
+
+SuggestCard.propTypes = {
+    onBanCardSubmit: propTypes.func
+};

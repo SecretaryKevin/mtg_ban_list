@@ -1,3 +1,4 @@
+//TODO: redo all sql requests due to change in database schema
 const express = require('express');
 const router = express.Router();
 const dotenv = require('dotenv');

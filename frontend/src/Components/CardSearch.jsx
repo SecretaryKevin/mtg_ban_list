@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
+import PropTypes from "prop-types";
 import axios from 'axios';
 
 export function CardSearch({ onCardSelect }) {
@@ -83,3 +84,7 @@ export function CardSearch({ onCardSelect }) {
         </>
     );
 }
+
+CardSearch.propTypes = {
+    onCardSelect: PropTypes.func.isRequired
+};

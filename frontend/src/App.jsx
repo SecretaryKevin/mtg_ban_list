@@ -14,18 +14,12 @@ import axios from "axios";
 function App() {
     const [user, setUser] = React.useState(null);
     const [cards, setCards] = React.useState([]);
-    const [allUsers, setAllUsers] = React.useState([]);
     const [votes, setVotes] = React.useState([]);
     const DEFAULT_CARD_STATUS = 'pending vote';
+    const ALL_USERS = import.meta.env.VITE_AUTH_UUID.split(',') + import.meta.env.VITE_ADMIN_UUID.split(',');
 
     useEffect(() => {
         // call the backend to get the users, banned cards, pending cards, and votes
-        fetch('http://localhost:5174/getUsers')
-            .then(response => response.json())
-            .then(data => {
-                setAllUsers(data);
-                console.log(" users: ", data)
-            });
         fetch('http://localhost:5174/getCards')
             .then(response => response.json())
             .then(data => {
@@ -41,6 +35,13 @@ function App() {
 
 
     }, []);
+
+    const onVote = async (card_id, user_id, vote) => {
+        return card_id, user_id, vote //just to make the ide happy
+        //TODO: Implement the vote logic
+        // update the vote in the state
+        // update the vote in the database
+    }
 
     function setUserInfo(userInfo) {
         console.log('User Info:', userInfo);
@@ -95,10 +96,10 @@ function App() {
                     <Header user={user} logout={logout} />
                     <main>
                         <Routes>
-                            <Route exact path="/" element={<Home user={user} cards={cards} />} />
+                            <Route exact path="/" element={<Home user={user} cards={cards}  votes={votes} onVote={onVote}/>} />
                             <Route path="/suggestCard" element={user !== null ? <SuggestCard onBanCardSubmit={handleBanCardSubmit}/> : <Navigate to="/unauthorized"/>}/>
                             <Route path="/admin" element={user !== null && user.isAdmin ? <AdminDashboard/> : <Navigate to="/unauthorized"/>}/>
-                            <Route path="/callback" element={<Callback setUserInfo={setUserInfo} allUsers={allUsers} />} />
+                            <Route path="/callback" element={<Callback setUserInfo={setUserInfo} allUsers={ALL_USERS} />} />
                             <Route path="/unauthorized" element={<Unauthorised/>}/>
                         </Routes>
                     </main>

@@ -1,4 +1,5 @@
-import {Link} from 'react-router-dom';
+import {Link} from 'react-router-dom'
+import PropTypes from "prop-types";
 export function Header({ user, logout }) {
     return (
         <>
@@ -28,3 +29,11 @@ export function Header({ user, logout }) {
         </>
     )
 }
+Header.propTypes = {
+    user: PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        username: PropTypes.string.isRequired,
+        isAdmin: PropTypes.bool.isRequired,
+    }),
+    logout: PropTypes.func.isRequired
+};
